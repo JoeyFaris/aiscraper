@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from scraper import scrape_website
 from text_processor import process_text
-from tts import text_to_speech
+from tts import text_to_speech, stop_speech
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
 @app.route('/api/scrape', methods=['POST'])
 def scrape():
@@ -21,6 +21,12 @@ def tts():
     text = data.get('text')
     text_to_speech(text)
     return jsonify({'message': 'Text-to-speech conversion completed successfully.'})
+
+@app.route('/api/tts/stop', methods=['POST'])
+def stop_tts():
+    data = request.json
+    stop_speech()
+    return jsonify({'message': 'Text-to-speech stopped successfully.'})
 
 if __name__ == "__main__":
     app.run(debug=True)

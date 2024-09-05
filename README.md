@@ -44,9 +44,9 @@ The backend is built with Python using Flask for the API. Key files:
 
 ## Usage
 
-1. Open the web application in your browser (default: http://localhost:3000)
+1. Open the web application in your browser
 2. Enter a URL in the input field
-3. Click "Scrape" to fetch and process the content
+3. Click "Scrape" to fetch and process the content (Currently limited - only extracting body texts)
 4. Click "Read Aloud" to convert the scraped text to speech
 5. Use the "Turn Off" button to stop the speech playback
 

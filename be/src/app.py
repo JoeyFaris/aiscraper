@@ -3,6 +3,7 @@ from flask_cors import CORS
 from scraper import scrape_website
 from text_processor import process_text
 from tts import text_to_speech, stop_speech
+from process_pdf import process_pdf
 
 app = Flask(__name__)
 CORS(app)
@@ -28,5 +29,18 @@ def stop_tts():
     stop_speech()
     return jsonify({'message': 'Text-to-speech stopped successfully.'})
 
+@app.route('/api/upload-pdf', methods=['POST'])
+def upload_pdf():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+    
+    processed_text, error = process_pdf(file)
+    if error:
+        return jsonify({'error': error}), 400
+    return jsonify({'text': processed_text})
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 
